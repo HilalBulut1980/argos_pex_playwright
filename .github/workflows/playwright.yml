@@ -26,8 +26,8 @@ on:
           - gallery_image_popups_zubehoer.spec.js
           - opened_menus.spec.js
           - product_pages.spec.js
-  schedule:
-    - cron: '00 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
+  # schedule:
+  #   - cron: '00 00 * * 1-5' # Schedule to run every day at 1:00 AM from Monday to Friday (aktuell deutsche Zeit - 2 Stunden)
 
 jobs:
   manual-playwright-run-ubuntu:
@@ -54,21 +54,21 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
-  scheduled-playwright-run-ubuntu:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' # run only scheduled
-    container:
-      image: mcr.microsoft.com/playwright:v1.45.0-noble
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.3.0
-      - name: Install dependencies
-        run: npm ci
-      - name: Run Playwright tests - scheduled
-        run: npx playwright test
-        env: 
-          BASE_URL: ${{ secrets.BASE_URL }}
-          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+  # scheduled-playwright-run-ubuntu:
+  #   timeout-minutes: 60
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'schedule' # run only scheduled
+  #   container:
+  #     image: mcr.microsoft.com/playwright:v1.45.0-noble
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22.3.0
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Run Playwright tests - scheduled
+  #       run: npx playwright test
+  #       env: 
+  #         BASE_URL: ${{ secrets.BASE_URL }}
+  #         ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
